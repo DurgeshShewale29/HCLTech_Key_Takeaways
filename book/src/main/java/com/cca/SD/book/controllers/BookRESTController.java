@@ -4,8 +4,13 @@ import com.cca.SD.book.services.BookService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -25,8 +30,28 @@ public class BookRESTController {
 		return service.getBookName();
 	}
 	@GetMapping("/readbooks")
-	public List<Book> readBooks() {
-		return service.readBooks();
+	public List<Book> readBooks(@RequestParam boolean db) {
+		return service.readBooks(db);
+	}
+	@PostMapping("/createbook")
+	public String createBook(@RequestParam boolean db, @RequestBody Book book) {
+		service.createBook(book,db);
+		return "Success";
+	}
+	
+	@PutMapping("/updatebook")
+	public String updateBook(@RequestParam boolean db, @RequestBody Book book) {
+		service.updateBook(book,db);
+		return "Success";
+	}
+	@DeleteMapping("deletebook")
+	public String deleteBook(@RequestParam boolean db, @RequestParam Long bno) {
+		service.deleteBook(bno,db);
+		return "Success";
+	}
+	@GetMapping("getbookbybno")
+	public Book getBookByBno(@RequestParam boolean db, @RequestParam Long bno) {
+		return service.getBookByBno(bno,db);
 	}
 
 }

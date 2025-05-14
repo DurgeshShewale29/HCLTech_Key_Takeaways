@@ -7,11 +7,14 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.cca.SD.book.models.Book;
+import com.cca.SD.book.repositories.BookDBRepository;
 import com.cca.SD.book.repositories.BookListRepository;
 @Service
 public class BookService {
 	@Autowired
 	private BookListRepository repo;
+	@Autowired
+	private BookDBRepository repoDB;
 	public BookService() {
 		//repo = new BookListRepository();
 	}
@@ -20,7 +23,36 @@ public class BookService {
 		return repo.getBookName();
 	}
 	
-	public List<Book> readBooks() {
-		return repo.readBooks();
+	public List<Book> readBooks(boolean isDB){
+		if(!isDB)
+			return repo.readBooks();
+		else
+			return repoDB.findAll();
+	}
+	public void createBook(Book book, boolean isDB) {
+		if(!isDB)
+			repo.createBook(book);
+		else
+			repoDB.save(book);
+	}
+	
+	public void updateBook(Book book,boolean isDB) {
+		if(!isDB)
+			repo.updateBook(book);
+		else
+			repoDB.save(book);
+	}
+	
+	public void deleteBook(Long bno,boolean isDB) {
+		if(!isDB)
+			repo.deleteBook(bno);
+		else
+			repoDB.deleteById(bno);
+	}
+	public Book getBookByBno(Long bno,boolean isDB) {
+		if(!isDB)
+			return repo.getBookByBno(bno);
+		else
+			return repoDB.getBookByBno(bno);
 	}
 }
