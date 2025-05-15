@@ -2,6 +2,8 @@ package com.cca.SD.book.controllers;
 
 import com.cca.SD.book.services.BookService;
 
+import jakarta.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -26,8 +28,8 @@ public class BookRESTController {
 		//service= new BookService();
 	}
 	@GetMapping("/getbookname")
-	public String getBookName() {
-		return service.getBookName();
+	public String getBookName(HttpServletRequest req) {
+		return service.getBookName() + req.getSession().getId();
 	}
 	@GetMapping("/readbooks")
 	public List<Book> readBooks(@RequestParam boolean db) {

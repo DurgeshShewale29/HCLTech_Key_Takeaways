@@ -18,7 +18,7 @@ public class BookDto {
 		this.price = price;
 	}
 
-Long getBno() {
+public Long getBno() {
 		return bno;
 	}
 	public void setBno(Long bno) {
